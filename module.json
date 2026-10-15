@@ -1,0 +1,30 @@
+{
+  "id": "raven-step",
+  "title": "Raven Step — Shadar-Kai & Misty Step",
+  "description": "Raven Queen and Misty Step: point selection, teleport, shadow effects and sound. Misty Step uses native D&D5e spell consumption.",
+  "version": "1.1.0",
+  "authors": [
+    {
+      "name": "Pavlo · custom module"
+    }
+  ],
+  "compatibility": {
+    "minimum": "14",
+    "maximum": "14"
+  },
+  "relationships": {
+    "systems": [
+      {
+        "id": "dnd5e",
+        "type": "system",
+        "compatibility": {
+          "minimum": "6.0.6"
+        }
+      }
+    ]
+  },
+  "esmodules": [
+    "scripts/raven-step.mjs"
+  ],
+  "socket": true
+}
