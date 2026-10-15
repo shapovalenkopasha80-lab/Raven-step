@@ -1,0 +1,44 @@
+name: Build Foundry Release
+on:
+  release:
+    types: [published]
+permissions:
+  contents: write
+concurrency:
+  group: release-${{ github.event.release.tag_name }}
+  cancel-in-progress: false
+jobs:
+  package:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out release tag
+        uses: actions/checkout@v4
+        with:
+          ref: ${{ github.event.release.tag_name }}
+          persist-credentials: false
+      - name: Set up Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Check module and run tests
+        run: |
+          node --check scripts/raven-step.mjs
+          node --test tests/raven-step.test.mjs
+      - name: Build release assets
+        env:
+          RELEASE_TAG: ${{ github.event.release.tag_name }}
+        run: python3 tools/build_release.py --repository "$GITHUB_REPOSITORY" --tag "$RELEASE_TAG"
+      - name: Upload installable files
+        env:
+          GH_TOKEN: ${{ github.token }}
+          RELEASE_TAG: ${{ github.event.release.tag_name }}
+        run: gh release upload "$RELEASE_TAG" dist/module.json dist/raven-step.zip --repo "$GITHUB_REPOSITORY" --clobber
+      - name: Show installation URL
+        run: |
+          python3 - <<'PY'
+          import json, os
+          from pathlib import Path
+          manifest = json.loads(Path('dist/module.json').read_text())
+          with open(os.environ['GITHUB_STEP_SUMMARY'], 'a') as report:
+              report.write('## Install in Foundry\n\nManifest URL:\n\n' + manifest['manifest'] + '\n')
+          PY

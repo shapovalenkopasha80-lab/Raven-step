@@ -4,6 +4,16 @@
 
 Цільові версії: Foundry 14.368 та D&D5e 6.0.6. Без сторонніх залежностей. Локальні тести з імітацією API пройдено; живе тестування у Foundry ще потрібне. Опір Raven Queen застосовується вручну.
 
+## Репозиторій підготовлений
+
+Код, звук, тести та workflow розміщено в репозиторії. Наступний крок — створити звичайний реліз з тегом `v1.1.0` на `main`:
+https://github.com/shapovalenkopasha80-lab/Raven-step/releases/new
+
+Після успішного виконання Actions Manifest URL буде:
+https://github.com/shapovalenkopasha80-lab/Raven-step/releases/latest/download/module.json
+
+До створення релізу це посилання ще не працює.
+
 ## Перша публікація через сайт GitHub
 
 1. Створи **публічний** репозиторій `raven-step`. Це зробить код і звук доступними всім; файлів кампанії чи персонажів у цьому пакеті немає.
@@ -13,10 +23,10 @@
 5. На вкладці **Actions** дочекайся зеленої позначки біля **Build Foundry Release**. Workflow перевірить код і додасть до релізу `module.json` та `raven-step.zip`.
 6. Відкрий реліз. У **Assets** скопіюй адресу вкладення **module.json** (правою кнопкою → Copy link address). Це вже готовий Manifest URL для встановлення конкретної версії. Стале посилання для останньої версії також показується у підсумку виконання Actions.
 
-Стале посилання має формат (OWNER/REPOSITORY заміни своєю адресою):
+Стале посилання має формат (shapovalenkopasha80-lab/Raven-step заміни своєю адресою):
 
 ```
-https://github.com/OWNER/REPOSITORY/releases/latest/download/module.json
+https://github.com/shapovalenkopasha80-lab/Raven-step/releases/latest/download/module.json
 ```
 
 Кореневий `module.json` — вихідний шаблон. Workflow сам вставляє реальні `url`, `manifest` і `download`; для встановлення використовуй **вкладення релізу**, а не Raw-файл з кореня. `Source code (zip)`, який GitHub створює сам, теж не є інсталяційним архівом.
@@ -38,7 +48,7 @@ https://github.com/OWNER/REPOSITORY/releases/latest/download/module.json
 Ручний запасний варіант з установленим Python 3:
 
 ```
-python tools/build_release.py --repository YOUR_NAME/raven-step --tag v1.1.0
+python tools/build_release.py --repository shapovalenkopasha80-lab/Raven-step --tag v1.1.0
 ```
 
 Прикріпи обидва файли з `dist` до релізу `v1.1.0` вручну. YOUR_NAME — твій GitHub username; це приклад, а не готовий URL.
